@@ -20,7 +20,7 @@ class HuffmanNode:
         The right child node.
     """
 
-    def __init__(self, freq: int, char: Optional[str]) -> None:
+    def __init__(self, freq: int, char: Optional[str]=None) -> None:
         """
         Constructs all the necessary attributes for the HuffmanNode object.
 
@@ -68,6 +68,7 @@ def calculate_frequencies(data: str) -> dict[str, int]:
         A dictionary with characters as keys and their frequencies as values.
     """
     freq_str = defaultdict(int)
+    data = data.strip()
     for i in data:
         freq_str[i]= freq_str[i] + 1
     return freq_str
@@ -94,18 +95,19 @@ def build_huffman_tree(frequency: dict[str, int]) -> HuffmanNode:
         return priority_queue[0]
     node = None
     while priority_queue:
-        first = heapq.heappop()
-        second = heapq.heappop()
-        freq = first.freq + second.freq
-        node = HuffmanNode(freq,freq)
-        node.left = first
-        node.right = second
-        heapq.heappush(priority_queue, node)
+        first = heapq.heappop(priority_queue)
+        if priority_queue:
+            second = heapq.heappop(priority_queue)
+            freq = first.freq + second.freq
+            node = HuffmanNode(freq)
+            node.left = first
+            node.right = second
+            heapq.heappush(priority_queue, node)
+        else:
+            node = first
     return node
 
 
-
-        
 
 
 def generate_huffman_codes(node: Optional[HuffmanNode], code: str, huffman_codes: dict[str, str]) -> None:
@@ -123,14 +125,13 @@ def generate_huffman_codes(node: Optional[HuffmanNode], code: str, huffman_codes
     """
     if node is None:
         return None
-    else:
-        if node.left is not None:
-            code = code + "0"
-            generate_huffman_codes(node.left, code=code, huffman_codes=huffman_codes)
+    
+    if node.left is None and node.right is None:
         huffman_codes[node.char] = code
-        if node.right is not None:
-            code = code + "1"
-            generate_huffman_codes(node.right,code=code, huffman_codes=huffman_codes)   
+        return
+
+    generate_huffman_codes(node.left, code=code+"0", huffman_codes=huffman_codes)
+    generate_huffman_codes(node.right,code=code+"1", huffman_codes=huffman_codes)   
 
 def huffman_encoding(data: str) -> tuple[str, Optional[HuffmanNode]]:
     """
@@ -146,8 +147,15 @@ def huffman_encoding(data: str) -> tuple[str, Optional[HuffmanNode]]:
     Tuple[str, Optional[HuffmanNode]]
         A tuple containing the encoded string and the root of the Huffman Tree.
     """
-    
-    
+    freq = calculate_frequencies(data)
+    node = build_huffman_tree(freq)
+    coded = ""
+    huffman_codes = {}
+    generate_huffman_codes(node,coded,huffman_codes)
+    s = ""
+    for x in data:
+        s += huffman_codes[x]
+    return (s, node)
 
 def huffman_decoding(encoded_data: str, tree: Optional[HuffmanNode]) -> str:
     """
@@ -165,7 +173,19 @@ def huffman_decoding(encoded_data: str, tree: Optional[HuffmanNode]) -> str:
     str
         The decoded string.
     """
-    pass
+    if not tree:
+        return ""
+    decoded_data = []
+    current_node = tree
+    for digit in encoded_data:
+        current_node = current_node.left if digit == "0" else current_node.right
+        if current_node.left is None and current_node.right is None:
+            # we append the data and start from the root
+            decoded_data.append(current_node.char)
+            current_node = tree
+    # this is more efficient than   
+    return "".join(decoded_data)  
+        
 
 
 # Main Function
