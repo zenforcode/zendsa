@@ -1,5 +1,6 @@
 import hashlib
 import datetime
+from typing import Iterator
 
 class Block:
     """
@@ -101,7 +102,9 @@ class Blockchain:
         last = self.chain[-1]
         timestamp = datetime.datetime.now().timestamp()
         self.chain.append(Block(timestamp=timestamp, data=data, previous_hash=last.hash))
-        
+
+    def __iter__(self)-> Iterator[Block]:
+        return self.chain.__iter__()    
 
     def __repr__(self) -> str:
         """
@@ -128,7 +131,17 @@ if __name__ == "__main__":
     print(blockchain)
 
     # Test Case 2
-    pass
+    blockchain = Blockchain()
+    for i in range(10):
+        blockchain.add_block(f"Add {i}")
+    prev_hash = None
+    for block in blockchain:
+        if prev_hash is None:
+            prev_hash = block.hash
+        else:
+            assert block.previous_hash == prev_hash
+            prev_hash = block.hash
+    
 
     # Test Case 3
     pass
