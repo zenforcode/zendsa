@@ -1,5 +1,6 @@
 import os
 from typing import List
+from collections import deque
 
 def find_files(suffix: str, path: str) -> list[str]:
     """
@@ -23,8 +24,7 @@ def find_files(suffix: str, path: str) -> list[str]:
         A list of file paths that end with the given suffix.
     """
     file_list = []
-    stack: List[str] = []
-    current_path = path
+    stack: deque[str] = deque()
     for f in os.listdir(path):
         stack.append(os.path.join(path,f))
     
