@@ -134,4 +134,108 @@ We sort the movies by duration:
 12.    Frozen Truth (91 days) ❌
 
 We only managed to fit 3 movies before getting blocked by conflicts. *A lot of opportunitiews were lost*.
+It is not a good idea why:
+- It ignores optimal scheduling – A short job might still block many other jobs.
+- It may leave big gaps unfilled – A job that fits better might be skipped because it's slightly longer.
+- Doesn’t maximize total jobs taken – The focus should be on ending quickly, not just being short.
 
+A better idea is to pick the first job that terminate first, Earliest Completion Job.
+
+#### Earliest Completion Movie Schedule (2025-2026)
+
+| Movie Title         | Start Date  | End Date  | Duration (Days) | Overlaps With |
+|---------------------|------------|-----------|----------------|--------------|
+| The Man from Mars  | 01/01/2025 | 01/05/2025 | 5  | - |
+| Cyber Heist        | 03/01/2025 | 03/20/2025 | 19 | The Magician |
+| Lost in Time       | 04/15/2025 | 05/15/2025 | 30 | The Magician, Mayhem |
+| Excalibur          | 02/01/2025 | 04/30/2025 | 89 | The Magician |
+| The Magician       | 03/15/2025 | 06/10/2025 | 88 | Excalibur, Cyber Heist |
+| Mayhem             | 05/01/2025 | 07/10/2025 | 70 | The Magician |
+| Nightfall          | 06/01/2025 | 09/01/2025 | 92 | Mayhem |
+| Revenge Protocol   | 07/15/2025 | 10/15/2025 | 92 | - |
+| Shadow Realm       | 08/01/2025 | 11/30/2025 | 121 | Revenge Protocol |
+| The Last Prophet   | 10/01/2025 | 12/15/2025 | 76 | Shadow Realm |
+| The War Within     | 11/20/2025 | 02/20/2026 | 92 | The Last Prophet |
+| Frozen Truth       | 12/01/2025 | 03/01/2026 | 91 | The War Within |
+
+This schedule includes overlapping films, making it necessary to choose strategically.
+
+---
+
+## Why **Earliest Completion First** is the Best Approach
+
+A better idea is to **pick the movie that ends the earliest** because:
+1. It frees up time as soon as possible for future movies.
+2. It maximizes the number of movies that can be accepted.
+3. It avoids long commitments that may block other opportunities.
+
+### **Example Using Earliest Completion First Strategy**
+#### **Step 1: Sort by Earliest End Date**
+
+Sorted movies by end date:
+1. **The Man from Mars** (01/05/2025) ✅ Picked first
+2. **Cyber Heist** (03/20/2025) ✅ Picked
+3. **Lost in Time** (05/15/2025) ✅ Picked
+4. **Revenge Protocol** (10/15/2025) ✅ Picked
+5. **The Last Prophet** (12/15/2025) ✅ Picked
+6. **Frozen Truth** (03/01/2026) ✅ Picked
+
+#### **Final Result**
+By following this strategy, **6 movies were selected**, whereas picking jobs based on the shortest duration (SJF) only allowed for **3 movies** before conflicts occurred.
+
+---
+
+## Rust Implementation: Earliest Completion First
+```rust
+#[derive(Debug)]
+struct Movie {
+    title: String,
+    start: String,
+    end: String,
+    duration: u32,
+}
+
+fn earliest_completion_first(mut movies: Vec<Movie>) -> Vec<Movie> {
+    // Sort movies by earliest end date
+    movies.sort_by_key(|m| m.end.clone());
+    
+    let mut selected = Vec::new();
+    let mut last_end_date = "".to_string();
+
+    for movie in movies {
+        if selected.is_empty() || movie.start > last_end_date {
+            last_end_date = movie.end.clone();
+            selected.push(movie);
+        }
+    }
+    selected
+}
+
+fn main() {
+    let movies = vec![
+        Movie { title: "The Man from Mars".to_string(), start: "2025-01-01".to_string(), end: "2025-01-05".to_string(), duration: 5 },
+        Movie { title: "Cyber Heist".to_string(), start: "2025-03-01".to_string(), end: "2025-03-20".to_string(), duration: 19 },
+        Movie { title: "Lost in Time".to_string(), start: "2025-04-15".to_string(), end: "2025-05-15".to_string(), duration: 30 },
+        Movie { title: "Revenge Protocol".to_string(), start: "2025-07-15".to_string(), end: "2025-10-15".to_string(), duration: 92 },
+        Movie { title: "The Last Prophet".to_string(), start: "2025-10-01".to_string(), end: "2025-12-15".to_string(), duration: 76 },
+        Movie { title: "Frozen Truth".to_string(), start: "2025-12-01".to_string(), end: "2026-03-01".to_string(), duration: 91 },
+    ];
+    
+    let selected_movies = earliest_completion_first(movies);
+    println!("Selected Movies Using Earliest Completion First:");
+    for movie in selected_movies {
+        println!("{} ({} - {})", movie.title, movie.start, movie.end);
+    }
+}
+```
+
+### **Why Earliest Completion First Works Best:**
+1. It **maximizes** the number of movies selected.
+2. It **prevents conflicts** by ensuring the schedule is always open sooner.
+3. It outperforms both "earliest start first" and "shortest job first" in practical scheduling scenarios.
+
+This strategy ensures **optimal movie selection** while avoiding unnecessary long commitments! 🎬🚀
+
+The **take home lesson** is you've always to test your algorithm and do not stop at the first idea,
+reasonable looking algorithms can easily be incorrect. **Algorithm correctness** is a property 
+that must be carefully demostrated.
