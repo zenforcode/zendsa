@@ -37,7 +37,8 @@ A good algorithm has three main properties:
 
 Suppose that you are an actor that has to choose different movie offers to join in. Each offer
 comes with first and and day of filming. Whenever you accept a job, you must commit to being 
-availbale throughout the entire period.
+availbale throughout the entire period. Below you have your list of offers with start date
+and end date.
 
 
 | Movie Title         | Start Date  | End Date  | Overlaps With |
@@ -239,3 +240,17 @@ This strategy ensures **optimal movie selection** while avoiding unnecessary lon
 The **take home lesson** is you've always to test your algorithm and do not stop at the first idea,
 reasonable looking algorithms can easily be incorrect. **Algorithm correctness** is a property 
 that must be carefully demostrated.
+
+## Reasoning on correctness.
+Algortithms to be correct we need a proof. Formal mathematics proof are out of scope due 
+their complexity but providing counterexamples or demostration can be useful.
+Before we start thinking about algorithms we need a careful description on the problem 
+we're trying to solve. Problems specifications have two parts:
+1. the set of allowed input instances.
+2. the required properties of the algorithm's output.
+
+In any problem both require: provided input and desidered output. Here the 
+**take home lesson** is:
+- Narrow the set of allowed inteances until there is a corect and efficent
+  algorithm. For example we can restrict a graph problem from general 
+  graph to trees.git 
