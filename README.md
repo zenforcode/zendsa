@@ -49,26 +49,26 @@ Each lecture is:
 ```bash
 ZenDSA/
 ├── README.md
-├── Patterns/
+├── patterns/
 │   ├── SlidingWindow.md
 │   ├── TwoPointers.md
 │   └── ...
-├── DataStructures/
+├── dataStructures/
 │   ├── Stacks.md
 │   ├── Heaps.md
 │   ├── BinarySearchTrees.md
 │   ├── Graphs.md
 │   └── ...
-├── Algorithms/
+├── algorithms/
 │   ├── Sorting/
 │   ├── Searching/
 │   ├── Recursion/
 │   └── ...
-├── Code/
+├── code/
 │   ├── Python/
-│   ├── JavaScript/
+│   ├── Go/
 │   └── ...
-├── PracticeProblems/
+├── practiceproblems/
 │   └── PatternWise/
 └── Roadmap.md
 ```
