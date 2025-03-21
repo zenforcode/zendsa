@@ -61,7 +61,6 @@ timeline
 ```
 We want fast insertion and fast lookup, both in \( O(\log N) \) time.
 
-**Binary Search Tree Invariant**: For all nodes \( x \) in the tree:
-
-- If \( y \) is in the left subtree of \( x \), then \( \text{key}(y) \leq \text{key}(x) \)
-- If \( y \) is in the right subtree of \( x \), then \( \text{key}(y) \geq \text{key}(x) \)
+**Invariant**: For all nodes `x` in the tree:
+- If `y` is in the left subtree of `x`, then `key(y) <= key(x)`
+- If `y` is in the right subtree of `x`, then `key(y) >= key(x)`
