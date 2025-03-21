@@ -242,15 +242,63 @@ reasonable looking algorithms can easily be incorrect. **Algorithm correctness**
 that must be carefully demostrated.
 
 ## Reasoning on correctness.
-Algortithms to be correct we need a proof. Formal mathematics proof are out of scope due 
+### Problems and priorities
+
+Algorithms to be correct we need a proof. Formal mathematics proof are out of scope due 
 their complexity but providing counterexamples or demostration can be useful.
 Before we start thinking about algorithms we need a careful description on the problem 
 we're trying to solve. Problems specifications have two parts:
+
 1. the set of allowed input instances.
 2. the required properties of the algorithm's output.
 
 In any problem both require: provided input and desidered output. Here the 
-**take home lesson** is:
-- Narrow the set of allowed inteances until there is a corect and efficent
-  algorithm. For example we can restrict a graph problem from general 
-  graph to trees.git 
+**take home lesson** is to narrow down the set of allowed inteances until there is a corect and efficent algorithm. For example we can restrict a graph problem from general graph to trees.
+There are two common traps when specifying the output requirements of a problem:
+1. Asking **ill-defined** question, i.e. asking for the best route between two cities (i.e. is that the shortest or the one of less traffic?)
+2. Creating **compound goals**, i.e.Find the shortest path between Manchester and London that minimizes both travel distance and carbon emissions. The problem is well defined but complicated to solve.
+
+### Expressing Algorithms.
+
+The three most common form of algorithmic notation are:
+1. English
+2. Pseudocode
+3. A real programming language
+But you have to convey an idea in any case. So the **take home lesson** is the heart of any algorithm is 
+an idea. If your idea is not clearly revealed when you express an algorithm then you're using a too 
+low level notation to describe it.
+
+The best way to prove that an algorithm is **incorrect** is to produce an instance on which
+it yields an incorrect answer. Such instances are called **counterexamples**. No rational
+person will ever defend the correctness of an algorithm after a counter example has been identified.
+Very simple instances can instantly defeat reasonable-looking heuristic with a quick touche.
+Good countexamples have:
+- Verifiability - To demostrate that a particular instance in a counterexample to a particular
+                  algorithm, you must be able to:
+                  1. Calculate what answer your algorithm will give you this instance.
+                  2. Display a better answer 
+- Simplicity - Good counter examples have all unecessary details stripped away.
+
+Tecniques to create a counterexample:
+
+- **Think small**. When an algorithm fails there is usually a very simple example in which fail.
+  It is important to develop several simple examples because they are easier to verify and
+  reason about.
+- **Think exhaustively**. There are usually only a small number of possible instances for 
+   the first non-trivial value of n. For example if you look at intervals in a line can occour:
+   1. disjoint
+   2. overlapping
+   3. properly nesting
+   All those three cases can be systematically constructed by adding a third segment in
+   each possible way to these three instances.
+- **Hunt for weakness**. If a proposal algorithm is of the form **always take the bigger** (greedy),
+  think about why that might prvode to be the wrong thing to do.
+- **Go for a tie**. A devious way to break a greedy heuristic is to peovide
+- **Seeks for extremes**. Many counter examples aere mixtures of huge and tiny, left and right, few 
+    and many, near and far. It is usually easier to verify or reason about extreme examples then 
+    muddled ones.cd 
+
+Note the failure to find a countexample.
+
+
+
