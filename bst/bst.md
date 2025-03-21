@@ -210,4 +210,79 @@ def rank(node, t):
 
 ## ✅ Summary
 
-By augmenting each node with a `size`, we can compute `rank(t)` in **O(log n)** for balanced BSTs. This is useful for tracking scheduled planes, timestamps, or any other time-based rank queries.
+By augmenting each node with a `size`, we can compute `rank(t)` in **O(log n)** for balanced BSTs. This is useful for tracking scheduled planes, timestamps, or any other time-based rank queries. Using that we know where if the we can insert.
+
+## Simple Problems with a BST.
+### Diameter
+
+Given the root a binary tree, find the diameter. **Diameter** of a binary tree is the maximum distance between two 
+nodes: *the distance is measured by the number of edges between the nodes*.
+The diameter of binary search tree will be the maximum of:
+- the diameter of the left subtree
+- the diameter of the right subtree
+- the sum of the height of the left path and the height of the right path
+
+Here the python version.
+
+```python
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+def diameter_of_bst(root):
+    def longest_path(node):
+        if not node:
+            return 0, 0  # (diameter, height)
+
+        left_diameter, left_height = longest_path(node.left)
+        right_diameter, right_height = longest_path(node.right)
+
+        current_diameter = left_height + right_height
+        max_diameter = max(left_diameter, right_diameter, current_diameter)
+        current_height = max(left_height, right_height) + 1
+
+        return max_diameter, current_height
+
+    diameter, _ = longest_path(root)
+    return diameter
+```
+Here the rust version:
+
+```rust
+use std::rc::Rc;
+use std::cell::RefCell;
+
+// Define the TreeNode
+#[derive(Debug)]
+struct TreeNode {
+    val: i32,
+    left: Option<Rc<RefCell<TreeNode>>>,
+    right: Option<Rc<RefCell<TreeNode>>>,
+}
+
+// Helper type alias
+type Node = Option<Rc<RefCell<TreeNode>>>;
+
+fn diameter_of_bst(root: Node) -> i32 {
+    fn helper(node: &Node) -> (i32, i32) {
+        if let Some(n) = node {
+            let n = n.borrow();
+            let (left_dia, left_height) = helper(&n.left);
+            let (right_dia, right_height) = helper(&n.right);
+
+            let current_dia = left_height + right_height;
+            let max_dia = left_dia.max(right_dia).max(current_dia);
+            let height = 1 + left_height.max(right_height);
+
+            (max_dia, height)
+        } else {
+            (0, 0)
+        }
+    }
+
+    let (diameter, _) = helper(&root);
+    diameter
+}
+```
