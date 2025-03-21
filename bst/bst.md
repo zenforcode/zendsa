@@ -64,3 +64,149 @@ We want fast insertion and fast lookup, both in \( O(\log N) \) time.
 **Invariant**: For all nodes `x` in the tree:
 - If `y` is in the left subtree of `x`, then `key(y) <= key(x)`
 - If `y` is in the right subtree of `x`, then `key(y) >= key(x)`
+
+
+# BST Insertion: 49, 57, 46, 41
+
+We insert the following numbers into a Binary Search Tree (BST):
+
+**Values**: `49`, `57`, `46`, `41`
+
+---
+
+### Step 1: Insert `49`
+
+```mermaid
+graph TD
+    A(49)
+```
+
+---
+
+### Step 2: Insert `57`
+
+`57 > 49` → Insert to the **right** of `49`.
+
+```mermaid
+graph TD
+    A(49) --> B(57)
+```
+
+---
+
+### Step 3: Insert `46`
+
+`46 < 49` → Insert to the **left** of `49`.
+
+```mermaid
+graph TD
+    A(49) --> B(57)
+    A --> C(46)
+```
+
+---
+
+### Step 4: Insert `41`
+
+`41 < 49` → Go left to `46`  
+`41 < 46` → Insert to the **left** of `46`
+
+```mermaid
+graph TD
+    A(49) --> B(57)
+    A --> C(46)
+    C --> D(41)
+```
+
+---
+
+### ✅ Final BST Structure
+
+```mermaid
+graph TD
+    A(49) --> B(57)
+    A --> C(46)
+    C --> D(41)
+```
+Summarizing in a BST we have:
+
+| Operation       | Time Complexity | Description                              |
+|----------------|------------------|------------------------------------------|
+| Insertion       | O(h) = O(log N)  | Insert a node based on BST rules         |
+| find_min()      | O(h) = O(log N)  | Traverse to the leftmost node            |
+| find_max()      | O(h) = O(log N)  | Traverse to the rightmost node           |
+| next_item()     | O(h) = O(log N)  | Find in-order successor of a node        |
+
+
+To solve our scheduling problem, we need to add an additional requirement to our Binary Search Tree: the ability to compute the rank of a node in order to answer the question:
+
+*"How many planes are scheduled to land at or before a given time t?"*
+
+# Augmented BST with `rank(t)` Support
+
+We start with a Binary Search Tree (BST) and augment it to compute:
+
+> **rank(t)**: Number of values in the BST that are ≤ `t`
+
+---
+
+## 🧠 Node Augmentation
+
+Each node in the BST is augmented with a **size** field:
+
+- `size = 1 + size(left) + size(right)`
+- This represents the total number of nodes in the subtree rooted at that node
+
+---
+
+## 🌳 BST after inserting: `49, 57, 46, 41`
+
+We insert the values in order and compute the `size` of each node.
+
+### Final BST with `size` annotations:
+
+```mermaid
+graph TD
+    A((49\n[4])) --> B((57\n[1]))
+    A --> C((46\n[2]))
+    C --> D((41\n[1]))
+```
+
+---
+
+## ✏️ `rank(t)` Algorithm
+
+```python
+def rank(node, t):
+    if node is None:
+        return 0
+    if t < node.value:
+        return rank(node.left, t)
+    elif t == node.value:
+        return size(node.left) + 1
+    else:
+        return size(node.left) + 1 + rank(node.right, t)
+```
+
+### Explanation:
+- If `t < node.value`: only left subtree may contain values ≤ t
+- If `t == node.value`: count left subtree + this node
+- If `t > node.value`: count left + self + right subtree’s rank
+
+---
+
+## 🧪 Sample `rank(t)` Queries
+
+| `t`   | `rank(t)` | Explanation                   |
+|-------|-----------|-------------------------------|
+| 40    | 0         | No values ≤ 40                |
+| 41    | 1         | Only node 41                  |
+| 46    | 2         | Nodes: 41, 46                 |
+| 49    | 3         | Nodes: 41, 46, 49             |
+| 57    | 4         | All nodes: 41, 46, 49, 57     |
+
+---
+
+## ✅ Summary
+
+By augmenting each node with a `size`, we can compute `rank(t)` in **O(log n)** for balanced BSTs. This is useful for tracking scheduled planes, timestamps, or any other time-based rank queries.
