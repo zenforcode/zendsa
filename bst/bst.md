@@ -30,4 +30,20 @@ timeline
     41.3 : Landing B
     49 : Landing C
     56.3 : Landing D
+
+```
+This diagram shows the new landing at **53** being successfully scheduled because:
+
+- \( 53 - 49 = 4 > 3 \)
+- \( 56.3 - 53 = 3.3 > 3 \)
+So it satisfies the buffer requirement of \( K = 3 \) minutes on both sides.
+
+```mermaid
+timeline
+    title Landing Schedule with K = 3 Minutes (New Request at t = 53)
+    37 : Landing A (Now)
+    41.3 : Landing B
+    49 : Landing C
+    53 : ✅ Landing E (New Request - Accepted)
+    56.3 : Landing D
 ```
