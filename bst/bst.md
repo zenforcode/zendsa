@@ -47,3 +47,21 @@ timeline
     53 : ✅ Landing E (New Request - Accepted)
     56.3 : Landing D
 ```
+Now we will have a new landing reqeust at **44** and this will be rejected 
+because it is too close at 41.3 (only 2.7 minutes apart, which is less than K=3).
+
+```mermaid
+timeline
+    title Landing Schedule with K = 3 Minutes (New Request at t = 44)
+    37 : Landing A (Now)
+    41.3 : Landing B
+    44 : ❌ Landing E (Rejected - Too Close to 41.3)
+    49 : Landing C
+    56.3 : Landing D
+```
+We want fast insertion and fast lookup, both in \( O(\log N) \) time.
+
+**Binary Search Tree Invariant**: For all nodes \( x \) in the tree:
+
+- If \( y \) is in the left subtree of \( x \), then \( \text{key}(y) \leq \text{key}(x) \)
+- If \( y \) is in the right subtree of \( x \), then \( \text{key}(y) \geq \text{key}(x) \)
