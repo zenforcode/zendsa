@@ -82,11 +82,11 @@ ZenDSA/
    git clone https://github.com/your-username/ZenDSA.git
    ```
 
-2. Explore any pattern from `Patterns/`.
+2. Explore any pattern from `patterns/`.
 
-3. Deep dive into data structures from `DataStructures/`.
+3. Deep dive into data structures from `datastructures/`.
 
-4. Practice problems from `PracticeProblems/`.
+4. Practice problems from `practiceproblems/`.
 
 5. Use `Roadmap.md` to guide your learning path.
 
