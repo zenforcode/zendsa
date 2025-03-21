@@ -167,9 +167,9 @@ We insert the values in order and compute the `size` of each node.
 
 ```mermaid
 graph TD
-    A((49<br>[4])) --> B((57<br>[1]))
-    A --> C((46<br>[2]))
-    C --> D((41<br>[1]))
+    A["49 [4]"] --> B["57 [1]"]
+    A --> C["46 [2]"]
+    C --> D["41 [1]"]
 ```
 
 ---
