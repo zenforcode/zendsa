@@ -4,44 +4,51 @@ Start the pointers at the edges of the input. Move them towards each other until
 1. Start one pointer at the first index 0 and the other pointer at the last index input.length - 1.
 2. Use a while loop until the pointers are equal to each other.
 3. At each iteration of the loop, move the pointers towards each other. This means either increment the pointer that started at the first index, decrement the pointer that started at the last index, or both. Deciding which pointers to move will depend on the problem we are trying to solve.
-```bash
-function fn(arr):
+```python
+   def solution(arr):
     left = 0
-    right = arr.length - 1
-
+    right = len(arr) - 1
     while left < right:
-        Do some logic here depending on the problem
-        Do some more logic here to decide on one of the following:
-            1. left++
-            2. right--
-            3. Both left++ and right--
-    ```
+        #Do some logic here depending on the problem
+        #Do some more logic here to decide on one of the following:
+        #    1. left++
+        #    2. right--
+        #    3. Both left++ and right--
+```
+
 ###  Fast and Slow pointer
 The key idea is that the pointers start at the same location and then start moving at different speeds. The slow pointer moves one step at a time, while the fast pointer moves by two steps (different speed). Due to the different speeds of the pointers, this pattern is also commonly known as the Hare and Tortoise algorithm, where the Hare is the fast pointer while Tortoise is the slow pointer. If a cycle exists, the two pointers will eventually meet during traversal.
-
-FUNCTION fastAndSlow(dataStructure):
+```python
+def someCondition(fastPointer, slowPointer) -> bool:
+    """
+        enforce the condition
+    """
+    ...
+def handleCondition(dataStructure):
+    """
+        handle condition
+    """
+    ...
+def fastAndSlow(dataStructure):
   # initialize pointers (or indices)
   fastPointer = dataStructure.start   # or 0 if the data structure is an array
   slowPointer = dataStructure.start   # or 0 if the data structure is an array
   
-  WHILE fastPointer != null AND fastPointer.next != null: 
+  while fastPointer is not None AND fastPointer.next is not None: 
     # For arrays: WHILE fastPointer < dataStructure.length AND (fastPointer + 1) < dataStructure.length:
-    
     slowPointer = slowPointer.next            
     # For arrays: slowPointer = slowPointer + 1
-    
     fastPointer = fastPointer.next.next       
     # For arrays: fastPointer = fastPointer + 2
-    
-    IF fastPointer != null AND someCondition(fastPointer, slowPointer):
+    if fastPointer is not None AND someCondition(fastPointer, slowPointer):
       # For arrays: use someCondition(dataStructure[fastPointer], dataStructure[slowPointer]) if needed
       handleCondition(fastPointer, slowPointer)
-      BREAK
+      break
 
   # process the result
   processResult(slowPointer)
   # For arrays: processResult(slowPointer) might process dataStructure[slowPointer]
-
+```
 
 ## Sliding windows
 There is a very common group of problems involving subarrays that can be solved efficiently with sliding window. Let's talk about how to identify these problems.
