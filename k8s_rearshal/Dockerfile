@@ -5,5 +5,6 @@ WORKDIR /app
 # Copy your application code
 COPY app.js .
 # Use a more flexible entrypoint
+EXPOSE 8080
 CMD ["node", "app.js"]
 
