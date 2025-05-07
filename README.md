@@ -53,7 +53,7 @@ ZenDSA/
 │   ├── SlidingWindow.md
 │   ├── TwoPointers.md
 │   └── ...
-├── dataStructures/
+├── datastructures/
 │   ├── Stacks.md
 │   ├── Heaps.md
 │   ├── BinarySearchTrees.md
