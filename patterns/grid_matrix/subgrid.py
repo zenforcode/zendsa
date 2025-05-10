@@ -2,7 +2,6 @@
 """
 Given a rectangular grid of integers with dimensions R×C (where R > 0 and C > 0), return a new grid of the same size where each cell [r][c] contains the maximum value within the subgrid starting at [r][c] (top-left) and ending at [R-1][C-1] (bottom-right).
 0 k = r[R-1][C-1], k-->2
-
 ## STEP A
 1. read the statement twice 
 2. work though examples
@@ -18,8 +17,6 @@ grid = [
     [4, -1, 0],
     [2, 0, 2]
 ]
-
-
 1. grid = [
     [1, 5, 3],
     [4, -1, 0],
@@ -37,8 +34,6 @@ def find_subgrid_max(grid: List[List[int]]) -> List[List[int]]:
             if c + 1 < C:
                 res[r][c] = max(res[r][c], grid[r][c+1])
     return res
-
-
 # Example input
 input_grid = [
     [1,  5, 3],
