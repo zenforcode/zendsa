@@ -42,8 +42,6 @@ def find_subgrid_max(grid: List[List[int]]) -> List[List[int]]:
             if c + 1 < C:
                 compare.append(dp[r][c + 1])
             dp[r][c] = max(compare)
-    for row in dp:
-        print(row)
 
     return dp
 
