@@ -28,22 +28,15 @@ grid = [
 """
 from typing import List
 def find_subgrid_max(grid: List[List[int]]) -> List[List[int]]:
-    R = len(grid)
-    C = len(grid[0])
-    dp = [[0] * C for _ in range(R)]
-    dp[R - 1][C - 1] = grid[R - 1][C - 1]
+    R,C = len(grid), len(grid[0])
+    res = [ row.copy() for row in grid]
     for r in range(R - 1, -1, -1):
         for c in range(C - 1, -1, -1):
-            if r == R - 1 and c == C - 1:
-                continue
-            compare = [grid[r][c]]
             if r + 1 < R:
-                compare.append(dp[r + 1][c])
+                res[r][c] = max(res[r][c], grid[r+1][c])
             if c + 1 < C:
-                compare.append(dp[r][c + 1])
-            dp[r][c] = max(compare)
-
-    return dp
+                res[r][c] = max(res[r][c], grid[r][c+1])
+    return res
 
 
 # Example input
@@ -52,5 +45,4 @@ input_grid = [
     [4, -1, 0],
     [2,  0, 2]
 ]
-
 find_subgrid_max(input_grid)
