@@ -58,7 +58,10 @@ def min_order_sort(arr: list[int], x: int) -> int:
 
 if __name__=="__main__":
     arr = [5,1,2,0,8,4]
-    print(min_order_sort(arr, 3))
+    arr = [5, 1, 2, 0, 8, 4]
+    print(min_order_sort(arr, 7))
+
+   
 
 
 
