@@ -25,6 +25,8 @@ Imagine two people running on a circular track. If one runs twice as fast as the
 def has_cycle(head):
     slow = head
     fast = head
+    if head is None:
+        return False
 
     while fast and fast.next:
         slow = slow.next         # Move 1 step
