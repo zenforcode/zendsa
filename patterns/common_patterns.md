@@ -101,37 +101,21 @@ function fn(arr):
 Prefix sum is a technique that can be used on arrays (of numbers). The idea is to create an array prefix where prefix[i] is the sum of all elements up to the index i (inclusive). For example, given nums = [5, 2, 1, 6, 3, 8], we would have prefix = [5, 7, 8, 14, 17, 25].
 
 ```
-Given an array nums,
-
 prefix = [nums[0]]
 for (int i = 1; i < nums.length; i++)
     prefix.append(nums[i] + prefix[prefix.length - 1])
 ```
 
-A prefix sum is a great tool whenever a problem involves sums of a subarray. It only costs 
-O
-(
-n
-)
-O(n) to build but allows all future subarray queries to be 
-O
-(
-1
-)
+A prefix sum is a great tool whenever a problem involves sums of a subarray. 
+It only costs  O(n)  to build but allows all future subarray queries to be 
 O(1), so it can usually improve an algorithm's time complexity by a factor of 
-O
-(
-n
-)
-O(n), where 
-n
-n is the length of the array. Let's look at some examples.
+O(n), where  n is the length of the array. Let's look at some examples.
 
 Building a prefix sum is a form of pre-processing. Pre-processing is a useful strategy in a variety of problems where we store pre-computed data in a data structure before running the main logic of our algorithm. While it takes some time to pre-process, it's an investment that will save us a huge amount of time during the main parts of the algorithm.
 
-
 ## Example 
- Given an integer array nums, an array queries where queries[i] = [x, y] and an integer limit, return a boolean array that represents the answer to each query. A query is true if the sum of the subarray from x to y is less than limit, or false otherwise.
+
+*Given an integer array nums, an array queries where queries[i] = [x, y] and an integer limit, return a boolean array that represents the answer to each query. A query is true if the sum of the subarray from x to y is less than limit, or false otherwise.*
 
 For example, given nums = [1, 6, 3, 2, 7, 2], queries = [[0, 3], [2, 5], [2, 4]], and limit = 13, the answer is [true, false, true]. For each query, the subarray sums are [12, 14, 12].
 ```python
@@ -148,11 +132,7 @@ def answer_queries(nums, queries, limit):
     return ans
 ```
 ## Hashing
- hash map is an unordered data structure that stores key-value pairs. A hash map can add and remove elements in 
-O
-(
-1
-)
+HashMap is an unordered data structure that stores key-value pairs. A hash map can add and remove elements in O(1)
 O(1), as well as update values associated with a key and check if a key exists, also in 
 O
 (
